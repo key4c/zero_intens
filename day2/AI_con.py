@@ -7,13 +7,25 @@ client = OpenAI(
 )
 
 def get_response_from_model(prompt):
-    # Отправляем запрос к модели
-    chat_completion = client.chat.completions.create(
-        model="gpt-3.5-turbo-1106",
-        messages=[{"role": "user", "content": prompt}]
-    )
-    # Извлекаем и возвращаем ответ
-    return chat_completion['choices'][0]['message']['content']
+    try:
+        # Отправляем запрос к модели
+        chat_completion = client.chat.completions.create(
+            model="gpt-3.5-turbo-1106",
+            messages=[{"role": "user", "content": prompt}]
+        )
+        
+        # Выводим полученный ответ для отладки
+        print(chat_completion)
+        
+        # Извлекаем и возвращаем ответ
+        return chat_completion['choices'][0]['message']['content']
+    except KeyError as e:
+        print(f"KeyError: {e}")
+        return "Ошибка: неправильный формат ответа от API."
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return "Ошибка: что-то пошло не так при запросе к API."
+
 
 def main():
     print("Добро пожаловать в чат с нейросетью! Введите 'exit' для выхода.")
