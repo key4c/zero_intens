@@ -13,11 +13,6 @@ def get_response_from_model(prompt):
             model="gpt-3.5-turbo-1106",
             messages=[{"role": "user", "content": prompt}]
         )
-        # Выводим полученный ответ для отладки
-        """
-        print(chat_completion)
-        """  
-              
         # Извлекаем и возвращаем ответ
         return chat_completion.choices[0].message.content
     except KeyError as e:
